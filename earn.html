@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AssignMate Pro | Freelancer Onboarding</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --secondary: #7209b7;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .onboarding-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .onboarding-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .onboarding-header p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: var(--light-gray);
+            z-index: 1;
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            height: 4px;
+            background-color: var(--primary);
+            z-index: 2;
+            transition: width 0.3s ease;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 3;
+        }
+
+        .step-number {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            border: 3px solid var(--light-gray);
+        }
+
+        .step.active .step-number {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary-light);
+        }
+
+        .step.completed .step-number {
+            background-color: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .step-label {
+            font-size: 0.875rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .step.active .step-label {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .step.completed .step-label {
+            color: var(--success);
+        }
+
+        .onboarding-content {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .form-text {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin-top: 0.25rem;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .skill-tag {
+            background-color: var(--primary-light);
+            color: white;
+            padding: 0.375rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .skill-tag i {
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        .add-skill {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .add-skill input {
+            flex: 1;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(67, 97, 238, 0.1);
+        }
+
+        .btn-secondary {
+            background: var(--light-gray);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: #d1d7e0;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #3aa8d0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .file-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            border: 2px dashed var(--light-gray);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .file-upload i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .file-upload p {
+            color: var(--gray);
+            text-align: center;
+        }
+
+        .file-upload input {
+            display: none;
+        }
+
+        .portfolio-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-item i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-right: 1rem;
+        }
+
+        .portfolio-item-info {
+            flex: 1;
+        }
+
+        .portfolio-item-info h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .portfolio-item-info p {
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        .portfolio-item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #e51778;
+        }
+
+        .hourly-rate {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hourly-rate span {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .hourly-rate-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hourly-rate-input input {
+            max-width: 100px;
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .success-message i {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 1.5rem;
+        }
+
+        .success-message h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .success-message p {
+            color: var(--gray);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .onboarding-content {
+                padding: 1.5rem;
+            }
+
+            .progress-steps {
+                gap: 0.5rem;
+            }
+
+            .step-label {
+                font-size: 0.75rem;
+                text-align: center;
+            }
+
+            .action-buttons {
+                flex-direction: column-reverse;
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-tasks"></i>
+            <span>AssignMate Pro</span>
+        </div>
+
+        <div class="onboarding-header">
+            <h1>Freelancer Onboarding</h1>
+            <p>Complete your profile to start earning money by helping students with their assignments</p>
+        </div>
+
+        <div class="progress-steps">
+            <div class="progress-bar" style="width: 0%;"></div>
+            <div class="step active" id="step1">
+                <div class="step-number">1</div>
+                <div class="step-label">Personal Info</div>
+            </div>
+            <div class="step" id="step2">
+                <div class="step-number">2</div>
+                <div class="step-label">Skills & Education</div>
+            </div>
+            <div class="step" id="step3">
+                <div class="step-number">3</div>
+                <div class="step-label">Portfolio</div>
+            </div>
+            <div class="step" id="step4">
+                <div class="step-number">4</div>
+                <div class="step-label">Payment Setup</div>
+            </div>
+            <div class="step" id="step5">
+                <div class="step-number">5</div>
+                <div class="step-label">Complete</div>
+            </div>
+        </div>
+
+        <!-- Step 1: Personal Information -->
+        <div class="onboarding-content" id="step1Content">
+            <h2 style="margin-bottom: 1.5rem;">Personal Information</h2>
+            
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" class="form-control" placeholder="Enter your full name">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="form-control" placeholder="Enter your email">
+                <small class="form-text">We'll use this to contact you about assignments</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number">
+            </div>
+            
+            <div class="form-group">
+                <label for="country">Country</label>
+                <select id="country" class="form-control">
+                    <option value="">Select your country</option>
+                    <option value="US">United States</option>
+                    <option value="UK">United Kingdom</option>
+                    <option value="CA">Canada</option>
+                    <option value="AU">Australia</option>
+                    <option value="IN">India</option>
+                    <!-- More countries would be added here -->
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="timezone">Timezone</label>
+                <select id="timezone" class="form-control">
+                    <option value="">Select your timezone</option>
+                    <option value="GMT-12">(GMT-12:00) International Date Line West</option>
+                    <option value="GMT-5">(GMT-05:00) Eastern Time (US & Canada)</option>
+                    <option value="GMT">(GMT) Greenwich Mean Time (London)</option>
+                    <option value="GMT+5.5">(GMT+05:30) India Standard Time</option>
+                    <option value="GMT+10">(GMT+10:00) Sydney</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="bio">Professional Bio</label>
+                <textarea id="bio" class="form-control" rows="4" placeholder="Tell us about your academic background and experience"></textarea>
+                <small class="form-text">This will be displayed on your public profile</small>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-secondary" disabled>
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <button class="btn btn-primary" onclick="nextStep(2)">
+                    Continue <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 2: Skills & Education -->
+        <div class="onboarding-content" id="step2Content" style="display: none;">
+            <h2 style="margin-bottom: 1.5rem;">Skills & Education</h2>
+            
+            <div class="form-group">
+                <label>Your Skills</label>
+                <div class="skills-container" id="skillsContainer">
+                    <!-- Skills will be added here dynamically -->
+                </div>
+                <div class="add-skill">
+                    <input type="text" id="newSkill" class="form-control" placeholder="Add a skill (e.g., Calculus, Python, Essay Writing)">
+                    <button class="btn btn-primary" onclick="addSkill()">
+                        <i class="fas fa-plus"></i> Add
+                    </button>
+                </div>
+                <small class="form-text">Add at least 3 skills to increase your chances of getting assignments</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="educationLevel">Highest Education Level</label>
+                <select id="educationLevel" class="form-control">
+                    <option value="">Select your education level</option>
+                    <option value="high_school">High School</option>
+                    <option value="bachelors">Bachelor's Degree</option>
+                    <option value="masters">Master's Degree</option>
+                    <option value="phd">PhD</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="institution">Institution</label>
+                <input type="text" id="institution" class="form-control" placeholder="Name of your school/university">
+            </div>
+            
+            <div class="form-group">
+                <label for="major">Major/Field of Study</label>
+                <input type="text" id="major" class="form-control" placeholder="Your major or field of study">
+            </div>
+            
+            <div class="form-group">
+                <label for="graduationYear">Graduation Year</label>
+                <input type="number" id="graduationYear" class="form-control" placeholder="YYYY" min="1900" max="2099">
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-outline" onclick="prevStep(1)">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <button class="btn btn-primary" onclick="nextStep(3)">
+                    Continue <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 3: Portfolio -->
+        <div class="onboarding-content" id="step3Content" style="display: none;">
+            <h2 style="margin-bottom: 1.5rem;">Portfolio</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--gray);">
+                Showcase your best work to attract clients. Upload samples of assignments you've completed 
+                (with personal information removed) or describe your expertise.
+            </p>
+            
+            <div class="file-upload" onclick="document.getElementById('fileUpload').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Drag & drop files here or click to browse</p>
+                <p><small>PDF, DOCX, PPTX (Max 10MB each)</small></p>
+                <input type="file" id="fileUpload" multiple style="display: none;">
+            </div>
+            
+            <div id="portfolioItems">
+                <!-- Portfolio items will be added here dynamically -->
+                <div class="portfolio-item">
+                    <i class="fas fa-file-pdf"></i>
+                    <div class="portfolio-item-info">
+                        <h4>Calculus Problem Set</h4>
+                        <p>Solved 20 advanced calculus problems with detailed explanations</p>
+                    </div>
+                    <div class="portfolio-item-actions">
+                        <button class="btn btn-icon btn-danger">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="portfolioDescription">Portfolio Description</label>
+                <textarea id="portfolioDescription" class="form-control" rows="4" placeholder="Describe your experience, expertise, and the types of assignments you specialize in"></textarea>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-outline" onclick="prevStep(2)">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <button class="btn btn-primary" onclick="nextStep(4)">
+                    Continue <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 4: Payment Setup -->
+        <div class="onboarding-content" id="step4Content" style="display: none;">
+            <h2 style="margin-bottom: 1.5rem;">Payment Setup</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--gray);">
+                Set up how you want to get paid for completed assignments. You can change these settings later.
+            </p>
+            
+            <div class="form-group">
+                <label>Hourly Rate</label>
+                <div class="hourly-rate">
+                    <p>We recommend starting at <span>$15-20/hour</span> based on your skills and experience</p>
+                </div>
+                <div class="hourly-rate-input">
+                    <span>$</span>
+                    <input type="number" id="hourlyRate" class="form-control" value="15" min="5" max="100">
+                    <span>per hour</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="paymentMethod">Payment Method</label>
+                <select id="paymentMethod" class="form-control">
+                    <option value="">Select payment method</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="bank">Bank Transfer</option>
+                    <option value="stripe">Credit/Debit Card (Stripe)</option>
+                </select>
+            </div>
+            
+            <div id="paypalFields" style="display: none;">
+                <div class="form-group">
+                    <label for="paypalEmail">PayPal Email</label>
+                    <input type="email" id="paypalEmail" class="form-control" placeholder="Enter your PayPal email">
+                </div>
+            </div>
+            
+            <div id="bankFields" style="display: none;">
+                <div class="form-group">
+                    <label for="bankName">Bank Name</label>
+                    <input type="text" id="bankName" class="form-control" placeholder="Enter your bank name">
+                </div>
+                <div class="form-group">
+                    <label for="accountNumber">Account Number</label>
+                    <input type="text" id="accountNumber" class="form-control" placeholder="Enter your account number">
+                </div>
+                <div class="form-group">
+                    <label for="routingNumber">Routing Number</label>
+                    <input type="text" id="routingNumber" class="form-control" placeholder="Enter your routing number">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="taxId">Tax ID (Optional)</label>
+                <input type="text" id="taxId" class="form-control" placeholder="Enter your tax ID if applicable">
+                <small class="form-text">Required for payments over $600/year in some countries</small>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-outline" onclick="prevStep(3)">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <button class="btn btn-success" onclick="nextStep(5)">
+                    Complete Registration <i class="fas fa-check"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 5: Completion -->
+        <div class="onboarding-content" id="step5Content" style="display: none;">
+            <div class="success-message">
+                <i class="fas fa-check-circle"></i>
+                <h2>Registration Complete!</h2>
+                <p>Your freelancer profile has been successfully created. You can now start browsing available assignments and earning money.</p>
+                <button class="btn btn-primary" onclick="window.location.href='freelancer-dashboard.html'">
+                    Go to Dashboard <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Current step tracking
+        let currentStep = 1;
+        
+        // Skills array
+        let skills = ["Calculus", "Essay Writing"];
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Render initial skills
+            renderSkills();
+            
+            // Set up payment method change listener
+            document.getElementById('paymentMethod').addEventListener('change', function() {
+                const method = this.value;
+                document.getElementById('paypalFields').style.display = 'none';
+                document.getElementById('bankFields').style.display = 'none';
+                
+                if (method === 'paypal') {
+                    document.getElementById('paypalFields').style.display = 'block';
+                } else if (method === 'bank') {
+                    document.getElementById('bankFields').style.display = 'block';
+                }
+            });
+            
+            // Set up file upload preview
+            document.getElementById('fileUpload').addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    Array.from(e.target.files).forEach(file => {
+                        addPortfolioItem(file.name, file.type);
+                    });
+                }
+            });
+        });
+        
+        // Navigation functions
+        function nextStep(step) {
+            if (step > currentStep) {
+                // Validate current step before proceeding
+                if (!validateStep(currentStep)) {
+                    return;
+                }
+            }
+            
+            document.getElementById(`step${currentStep}Content`).style.display = 'none';
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            
+            currentStep = step;
+            
+            document.getElementById(`step${currentStep}Content`).style.display = 'block';
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            
+            // Update progress bar
+            const progressPercentage = ((currentStep - 1) / 4) * 100;
+            document.querySelector('.progress-bar').style.width = `${progressPercentage}%`;
+            
+            // Mark previous steps as completed
+            for (let i = 1; i < currentStep; i++) {
+                document.getElementById(`step${i}`).classList.add('completed');
+            }
+        }
+        
+        function prevStep(step) {
+            document.getElementById(`step${currentStep}Content`).style.display = 'none';
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            
+            currentStep = step;
+            
+            document.getElementById(`step${currentStep}Content`).style.display = 'block';
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            
+            // Update progress bar
+            const progressPercentage = ((currentStep - 1) / 4) * 100;
+            document.querySelector('.progress-bar').style.width = `${progressPercentage}%`;
+        }
+        
+        // Step validation
+        function validateStep(step) {
+            switch(step) {
+                case 1:
+                    const fullName = document.getElementById('fullName').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    
+                    if (!fullName) {
+                        alert('Please enter your full name');
+                        return false;
+                    }
+                    
+                    if (!email || !email.includes('@')) {
+                        alert('Please enter a valid email address');
+                        return false;
+                    }
+                    
+                    return true;
+                    
+                case 2:
+                    if (skills.length < 3) {
+                        alert('Please add at least 3 skills');
+                        return false;
+                    }
+                    
+                    const educationLevel = document.getElementById('educationLevel').value;
+                    if (!educationLevel) {
+                        alert('Please select your education level');
+                        return false;
+                    }
+                    
+                    return true;
+                    
+                case 3:
+                    // No strict validation for portfolio
+                    return true;
+                    
+                case 4:
+                    const paymentMethod = document.getElementById('paymentMethod').value;
+                    if (!paymentMethod) {
+                        alert('Please select a payment method');
+                        return false;
+                    }
+                    
+                    if (paymentMethod === 'paypal') {
+                        const paypalEmail = document.getElementById('paypalEmail').value.trim();
+                        if (!paypalEmail || !paypalEmail.includes('@')) {
+                            alert('Please enter a valid PayPal email');
+                            return false;
+                        }
+                    }
+                    
+                    if (paymentMethod === 'bank') {
+                        const bankName = document.getElementById('bankName').value.trim();
+                        const accountNumber = document.getElementById('accountNumber').value.trim();
+                        
+                        if (!bankName) {
+                            alert('Please enter your bank name');
+                            return false;
+                        }
+                        
+                        if (!accountNumber) {
+                            alert('Please enter your account number');
+                            return false;
+                        }
+                    }
+                    
+                    return true;
+                    
+                default:
+                    return true;
+            }
+        }
+        
+        // Skills functions
+        function addSkill() {
+            const skillInput = document.getElementById('newSkill');
+            const skill = skillInput.value.trim();
+            
+            if (skill && !skills.includes(skill)) {
+                skills.push(skill);
+                renderSkills();
+                skillInput.value = '';
+            }
+        }
+        
+        function removeSkill(index) {
+            skills.splice(index, 1);
+            renderSkills();
+        }
+        
+        function renderSkills() {
+            const container = document.getElementById('skillsContainer');
+            container.innerHTML = '';
+            
+            skills.forEach((skill, index) => {
+                const tag = document.createElement('div');
+                tag.className = 'skill-tag';
+                tag.innerHTML = `
+                    ${skill}
+                    <i class="fas fa-times" onclick="removeSkill(${index})"></i>
+                `;
+                container.appendChild(tag);
+            });
+        }
+        
+        // Portfolio functions
+        function addPortfolioItem(name, type) {
+            const container = document.getElementById('portfolioItems');
+            
+            let icon = 'fa-file';
+            if (type.includes('pdf')) icon = 'fa-file-pdf';
+            else if (type.includes('word') || type.includes('document')) icon = 'fa-file-word';
+            else if (type.includes('powerpoint') || type.includes('presentation')) icon = 'fa-file-powerpoint';
+            
+            const item = document.createElement('div');
+            item.className = 'portfolio-item';
+            item.innerHTML = `
+                <i class="fas ${icon}"></i>
+                <div class="portfolio-item-info">
+                    <h4>${name}</h4>
+                    <p>${type}</p>
+                </div>
+                <div class="portfolio-item-actions">
+                    <button class="btn btn-icon btn-danger" onclick="this.parentNode.parentNode.remove()">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(item);
+        }
+    </script>
+</body>
+</html>
