@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignme</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+   <!-- Header with User Profile -->
+    <header>
+        <div class="logo">AssignMe <span></span></div>
+        <nav>
+            <ul>
+                <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#upload"><i class="fas fa-cloud-upload-alt"></i> Submit Work</a></li>
+                <li class="user-menu">
+                    <a href="#account"><i class="fas fa-user-circle"></i> JohnDoe</a>
+                    <div class="dropdown">
+                        <a href="#account"><i class="fas fa-user"></i> Profile</a>
+                        <a href="#settings"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- File Upload Section -->
+        <section id="upload" class="upload-section">
+            <h2><i class="fas fa-file-upload"></i> Submit Your Assignment</h2>
+            <div class="upload-card">
+                <div class="upload-area" id="dropZone">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Drag & drop your files here or click to browse</p>
+                    <input type="file" id="fileInput" multiple>
+                </div>
+                <div class="form-group">
+                    <label for="assignmentTitle"><i class="fas fa-heading"></i> Assignment Title</label>
+                    <input type="text" id="assignmentTitle" placeholder="Calculus Problem Set">
+                </div>
+                <div class="form-group">
+                    <label for="assignmentDesc"><i class="fas fa-align-left"></i> Description</label>
+                    <textarea id="assignmentDesc" rows="3" placeholder="Detailed instructions..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="subject"><i class="fas fa-book"></i> Subject</label>
+                        <select id="subject">
+                            <option value="math">Mathematics</option>
+                            <option value="programming">Programming</option>
+                            <option value="business">Business</option>
+                            <option value="Carework">Carework</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="deadline"><i class="fas fa-calendar-alt"></i> Deadline</label>
+                        <input type="date" id="deadline">
+                    </div>
+                </div>
+                <button class="btn btn-upload"><i class="fas fa-paper-plane"></i> Submit Assignment</button>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="dashboard-section">
+            <h2><i class="fas fa-tachometer-alt"></i> Assignment Dashboard</h2>
+            <div class="status-tabs">
+                <button class="tab-btn active" data-tab="active">Active</button>
+                <button class="tab-btn" data-tab="in-progress">In Progress</button>
+                <button class="tab-btn" data-tab="completed">Completed</button>
+                <button class="tab-btn" data-tab="all">All Assignments</button>
+            </div>
+            
+            <div class="dashboard-cards">
+                <!-- Active Assignment Card -->
+                <div class="dashboard-card active">
+                    <div class="card-header">
+                        <h3>Calculus Problem Set</h3>
+                        <span class="status-badge active"><i class="fas fa-clock"></i> Active</span>
+                    </div>
+                    <div class="card-body">
+                        <p><i class="fas fa-file-alt"></i> Submitted: calculus_problems.pdf</p>
+                        <p><i class="fas fa-calendar-day"></i> Deadline: May 30, 2025</p>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 30%"></div>
+                            <span>3/10 problems solved</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="price">Budget: $50</span>
+                        <button class="btn btn-small"><i class="fas fa-comments"></i> Messages (2)</button>
+                    </div>
+                </div>
+
+                <!-- Completed Assignment Card -->
+                <div class="dashboard-card completed">
+                    <div class="card-header">
+                        <h3>Python Data Analysis</h3>
+                        <span class="status-badge completed"><i class="fas fa-check-circle"></i> Completed</span>
+                    </div>
+                    <div class="card-body">
+                        <p><i class="fas fa-file-alt"></i> Submitted: data_analysis.ipynb</p>
+                        <p><i class="fas fa-check-double"></i> Completed: May 15, 2025</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.5/5</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="price">Earned: $80</span>
+                        <button class="btn btn-small"><i class="fas fa-download"></i> Download Solution</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
